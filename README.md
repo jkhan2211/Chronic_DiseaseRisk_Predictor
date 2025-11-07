@@ -58,6 +58,27 @@ chronic_disease_risk_predictor
 
 ---
 
+## Sample Classification Models to Try
+
+| Model                  | Description                                   | Assigned To         |
+|------------------------|-----------------------------------------------|------------------|
+| Logistic Regression    | Baseline probabilistic classifier             |       |
+| Random Forest          | Ensemble of decision trees, robust to overfitting |        |
+| XGBoost                | Gradient boosting, effective on tabular data |         |
+| LightGBM               | Fast gradient boosting, handles large data   |    |
+| SVM                    | Good for high-dimensional, complex boundaries |  |
+| Neural Networks (MLP)  | Deep learning for complex feature interactions |       |
+
+---
+
+## Sample Clustering Models to Try
+
+| Model                  | Description                                   | Assigned To       |
+|------------------------|-----------------------------------------------|----------------|
+| KMeans                 | Partition-based clustering                     |     |
+| DBSCAN                 | Density-based, finds arbitrarily shaped clusters |      |
+| Agglomerative          | Hierarchical clustering                        |  |
+
 
 ## 📦 Demo
 
