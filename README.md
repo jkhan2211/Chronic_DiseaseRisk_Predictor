@@ -62,11 +62,11 @@ chronic_disease_risk_predictor
 
 | Model                  | Description                                   | Assigned To         |
 |------------------------|-----------------------------------------------|------------------|
-| Logistic Regression    | Baseline probabilistic classifier             |       |
-| Random Forest          | Ensemble of decision trees, robust to overfitting |        |
-| XGBoost                | Gradient boosting, effective on tabular data |         |
-| LightGBM               | Fast gradient boosting, handles large data   |    |
-| SVM                    | Good for high-dimensional, complex boundaries |  |
+| Logistic Regression    | Baseline probabilistic classifier             |    AH  |
+| Random Forest          | Ensemble of decision trees, robust to overfitting |        ALH|
+| XGBoost                | Gradient boosting, effective on tabular data | ON        |
+| LightGBM               | Fast gradient boosting, handles large data   |   JK |
+| SVM                    | Good for high-dimensional, complex boundaries | PV |
 | Neural Networks (MLP)  | Deep learning for complex feature interactions |       |
 
 ---
@@ -75,9 +75,9 @@ chronic_disease_risk_predictor
 
 | Model                  | Description                                   | Assigned To       |
 |------------------------|-----------------------------------------------|----------------|
-| KMeans                 | Partition-based clustering                     |     |
-| DBSCAN                 | Density-based, finds arbitrarily shaped clusters |      |
-| Agglomerative          | Hierarchical clustering                        |  |
+| KMeans                 | Partition-based clustering                     |   ON  |
+| DBSCAN                 | Density-based, finds arbitrarily shaped clusters |      ALH|
+| Agglomerative          | Hierarchical clustering                        | PV |
 
 
 ## 📦 Demo
