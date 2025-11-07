@@ -113,8 +113,8 @@ Video Link:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/<username>/Chronic_DiseaseRisk_Predictor.git
-cd Chronic_DiseaseRisk_Predictor
+git clone https://github.com/jkhan2211/DiseaseFeatureClassifiers.git
+cd DiseaseFeatureClassifiers
 ```
 
 2. **Clone the repository**
