@@ -47,10 +47,10 @@ DiseaseFeatureClassifiers/
 ## 🤝 Team Members
 
 [Junaid Khan](https://www.linkedin.com/in/junaid-devops)• 
-[Adam Healey]() • 
-[Ali Hyder]() • 
-[Olga Nazarenko]() • 
-[Pradeep Venkatesan]()
+[Adam Healey](https://www.linkedin.com/in/adam-healey) • 
+[Ali Hyder](https://www.linkedin.com/in/ali-hyder-iith1041) • 
+[Olga Nazarenko](https://www.linkedin.com/in/olga-nazarenko0) • 
+[Pradeep Venkatesan](https://www.linkedin.com/in/pradeep-venkatesan-tech/)
 
 ---
 
