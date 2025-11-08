@@ -1,0 +1,70 @@
+model:
+  best_model: LightGBM
+  dataset_info:
+    num_classes: 41
+    num_features: 132
+    target_variable: prognosis
+    test_samples: 775
+    train_samples: 4187
+  feature_importance:
+    SymptomGroup: 18857.0
+    belly_pain: 1464.0
+    dark_urine: 1732.0
+    family_history: 1500.0
+    stiff_neck: 1506.0
+  label_encoder_classes:
+  - (vertigo) Paroymsal  Positional Vertigo
+  - AIDS
+  - Acne
+  - Alcoholic hepatitis
+  - Allergy
+  - Arthritis
+  - Bronchial Asthma
+  - Cervical spondylosis
+  - Chicken pox
+  - Chronic cholestasis
+  - Common Cold
+  - Dengue
+  - 'Diabetes '
+  - Dimorphic hemmorhoids(piles)
+  - Drug Reaction
+  - Fungal infection
+  - GERD
+  - Gastroenteritis
+  - Heart attack
+  - Hepatitis B
+  - Hepatitis C
+  - Hepatitis D
+  - Hepatitis E
+  - 'Hypertension '
+  - Hyperthyroidism
+  - Hypoglycemia
+  - Hypothyroidism
+  - Impetigo
+  - Jaundice
+  - Malaria
+  - Migraine
+  - Osteoarthristis
+  - Paralysis (brain hemorrhage)
+  - Peptic ulcer diseae
+  - Pneumonia
+  - Psoriasis
+  - Tuberculosis
+  - Typhoid
+  - Urinary tract infection
+  - Varicose veins
+  - hepatitis A
+  model_type: classification
+  name: disease_classification_model
+  parameters: '{''boosting_type'': ''gbdt'', ''class_weight'': None, ''colsample_bytree'':
+    1.0, ''importance_type'': ''split'', ''learning_rate'': 0.1, ''max_depth'': -1,
+    ''min_child_samples'': 20, ''min_child_weight'': 0.001, ''min_split_gain'': 0.0,
+    ''n_estimators'': 50, ''n_jobs'': None, ''num_leaves'': 31, ''objective'': None,
+    ''random_state'': 42, ''reg_alpha'': 0.0, ''reg_lambda'': 0.0, ''subsample'':
+    1.0, ''subsample_for_bin'': 200000, ''subsample_freq'': 0, ''verbose'': -1}'
+  performance_metrics:
+    accuracy: 0.9148387096774193
+    f1_score: 0.8922949308755761
+    precision: 0.8812814847547503
+    recall: 0.9148387096774193
+    training_time_seconds: 1.7676713466644287
