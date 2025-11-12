@@ -35,12 +35,17 @@ chronic_disease_risk_predictor
 └── README.md # Project overview
 ```
 ---
+## Dataset
+The dataset selected for this task is “Disease Prediction Using Machine Learning” (Kaggle link). It was chosen because it includes a large number of symptoms (features) and corresponding prognoses (target classes). Given its size and structure, the dataset is well-suited for this project, as it reflects the scale of real-world healthcare data, where hospitals manage large patient populations and numerous clinical variables. This allows us to test whether our model can effectively handle datasets of comparable complexity.
+
+The dataset is already divided into training and testing subsets. In total, it contains data from 4,962 individuals with 133 possible symptoms and 42 diagnosed diseases. However, there is no accompanying metadata, so additional information such as patient demographics or age distributions cannot be analyzed.
+
 
 
 ## 🤝 Team Members
 
 [Junaid Khan](https://www.linkedin.com/in/junaid-devops)• 
-[Adam Healey]() • 
+[Adam Healey](https://www.linkedin.com/in/adam-healey/) • 
 [Ali Hyder]() • 
 [Olga Nazarenko]() • 
 [Pradeep Venkatesan]()
