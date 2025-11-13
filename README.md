@@ -193,6 +193,287 @@ plt.title("Histogram distribution of Symptoms per individual")
 plt.xlabel("Number of symptoms")
 plt.ylabel("Symptom Counts")
 ```
+![Histogram of Patient Symptoms](images/symptomHistogram.png)
+
+Rather than looking at the entire dataset, we can also inspect the average number of symptoms per prognosis using `df.groupby`
+
+```
+#what is the average number of symptoms per prognosis?
+avg_PrognosisCount = mergedDF.groupby('prognosis').apply( #groupby the prognosis predictor
+    lambda x: x.select_dtypes(include='number').sum(axis=1).mean() #sum and average the binary count of ones in numeric columns
+).reset_index(name='avg_symptomCount_perPrognosis') # name the new column of interest
+
+print(avg_PrognosisCount)
+```
+Simplest way to summarize is to show as a horizontal barchart
+```
+#first, sort the data so its easier to read.
+avg_PrognosisCount = avg_PrognosisCount.sort_values('avg_symptomCount_perPrognosis', ascending=False)
+
+#set the size of the plot and turn off the background grid
+plt.figure(figsize=(12,14))
+plt.grid(False)
+
+#Generate a horizontal barchart of average number of symptoms by prognosis
+plt.barh(avg_PrognosisCount['prognosis'], avg_PrognosisCount['avg_symptomCount_perPrognosis'], color='skyblue')
+#add a vertical line to show the average number of symptoms per individual
+plt.axvline(x=avgSymptoms, color='red', linestyle='--', label='Symptom Average per Individual')
+
+#Format the chart
+plt.yticks(fontsize=10)
+plt.ylabel('Disease prognosis')
+plt.xlabel('Average Number of Symptoms')
+plt.title('Mean number of symptoms per individual per Disease prognosis', fontsize = 16)
+
+#add legend and visualize
+plt.legend()
+plt.show()
+```
+![Histogram of Patient Symptoms by Prognosis](images/symptomBarchart.png)
+
+Question 3- How are symptoms related to one another?
+```
+
+#Lets cluster the features matrix and visualize
+X = featuresDF
+
+#import clustering libraries
+from sklearn.cluster import DBSCAN
+from sklearn.metrics import pairwise_distances
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+# Compute Jaccard distance among individuals
+jaccard_dist = pairwise_distances(X.to_numpy(), metric='jaccard')
+
+#Perform DBSCAN clusters and extract cluster labels
+db = DBSCAN(metric='precomputed', eps=0.5, min_samples=5)
+labels = db.fit_predict(jaccard_dist)
+
+# The reduce the total number of dimensions down to two.
+pca = PCA(n_components=2)
+X_2d = pca.fit_transform(X)
+```
+To make points on the PCA scatter plot easier to read, each point will be randomly 'jittered' by 20% to spread out their positions.
+```
+jitter_strength = 0.2  # 20% jitter
+jitter = np.random.normal(scale=jitter_strength, size=X_2d.shape)
+X_2d_jittered = X_2d + jitter
+
+# Visualize clusters ---
+plt.figure(figsize=(8, 6))
+scatter = plt.scatter(
+    X_2d_jittered[:, 0],
+    X_2d_jittered[:, 1],
+    c=labels,
+    cmap='tab10',
+    s=60,
+    alpha=0.8,
+    edgecolor='k'
+)
+plt.title("DBSCAN Clustering on Binary Matrix (Jaccard Similarity + 20% Jitter)")
+plt.xlabel("PCA 1")
+plt.ylabel("PCA 2")
+plt.colorbar(scatter, label="Cluster Label")
+plt.show()
+```
+![Patient Symptoms Clusters](images/DBSCAN_1.png)
+
+Looks good, but can be improved by looking at 3-dimensions instead of two.
+
+```
+#import
+from mpl_toolkits.mplot3d import Axes3D
+jaccard_dist = pairwise_distances(X.to_numpy(), metric='jaccard')
+
+#Get clusters and labels
+db = DBSCAN(metric='precomputed', eps=0.5, min_samples=5)
+labels = db.fit_predict(jaccard_dist)
+
+# Do PCA in 3 dimensions
+pca = PCA(n_components=3)
+X_3d = pca.fit_transform(X)
+
+# Jitter the datapoints
+jitter_strength = 0.2
+jitter = np.random.normal(scale=jitter_strength, size=X_3d.shape)
+X_3d_jittered = X_3d + jitter
+
+# generate a 3D scatterplot
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+scatter = ax.scatter(
+    X_3d_jittered[:, 0],
+    X_3d_jittered[:, 1],
+    X_3d_jittered[:, 2],
+    c=labels,
+    cmap='tab10',
+    s=60,
+    alpha=0.9,
+    edgecolor='k'
+)
+
+ax.set_title("DBSCAN Clustering on Binary Matrix (Jaccard + 20% Jitter, 3D PCA)")
+ax.set_xlabel("PCA 1")
+ax.set_ylabel("PCA 2")
+ax.set_zlabel("PCA 3")
+
+# Add legend and colorbar
+plt.colorbar(scatter, ax=ax, label="Cluster Label")
+plt.show()
+```
+![Patient Symptoms Clusters-3D](images/DBSCAN_3d.png)
+
+3D Representation improves visualization, but there are more clusters than their are categorical colors to represent them.  
+
+Next we will use a custom function to generate as many colors as there are clusters.
+
+
+```
+import plotly.graph_objects as go
+import matplotlib.colors as mcolors
+
+
+def generate_color_dict(categories):
+    """
+    Generate a color dictionary for a list of categories.
+    Returns hex colors.
+    """
+    n = len(categories)
+    color_dict = {}
+    
+    for i, cat in enumerate(categories):
+        # Evenly rotate hue around the HSL color wheel
+        hue = (i * 360 / n) % 360
+        rgb = mcolors.hsv_to_rgb((hue/360, 0.7, 0.8))  # saturation=0.7, lightness=0.8
+        color_dict[cat] = mcolors.to_hex(rgb)
+    
+    return color_dict
+```
+Plot using the improved color mapping.
+
+```
+jaccard_dist = pairwise_distances(X.to_numpy(), metric='jaccard')
+
+#Get clusters and labels
+db = DBSCAN(metric='precomputed', eps=0.5, min_samples=5)
+labels = db.fit_predict(jaccard_dist)
+
+#generate new colors
+unique_labels = np.unique(labels)
+print(unique_labels)
+color_dict = generate_color_dict(unique_labels)
+# Map each label to its corresponding color
+colors = [color_dict[label] for label in labels]
+
+
+# Do PCA in 3 dimensions
+pca = PCA(n_components=3)
+X_3d = pca.fit_transform(X)
+
+# Jitter the datapoints
+jitter_strength = 0.2
+jitter = np.random.normal(scale=jitter_strength, size=X_3d.shape)
+X_3d_jittered = X_3d + jitter
+
+# generate a 3D scatterplot
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+scatter = ax.scatter(
+    X_3d_jittered[:, 0],
+    X_3d_jittered[:, 1],
+    X_3d_jittered[:, 2],
+    c=colors,
+    s=60,
+    alpha=0.9,
+    edgecolor='k'
+)
+
+ax.set_title("DBSCAN Clustering on Binary Matrix (Jaccard + 20% Jitter, 3D PCA)")
+ax.set_xlabel("PCA Component 1")
+ax.set_ylabel("PCA Component 2")
+ax.set_zlabel("PCA Component 3")
+
+# # Optional - Add legend and colorbar- Too many for this particular example.
+# for label in unique_labels:
+#     ax.scatter([], [], [], c=color_dict[label], label=f"Cluster {label}")
+# ax.legend(title="Cluster Labels")
+
+
+plt.show()
+```
+![Patient Symptoms Clusters-3D-Improved Colors](images/DBSCAN_3d_newColors.png)
+
+Much better, but would be even more useful if the entire plot can be rotated and interactive with each point labeled with the patient's prognosis.
+
+```
+import plotly.graph_objects as go
+import matplotlib.colors as mcolors
+
+
+# Compute distance- try hamming distance this time
+hamming_dist = pairwise_distances(X.to_numpy(), metric='hamming')
+
+# Run DBSCAN clustering
+db = DBSCAN(metric='hamming', eps=0.55, min_samples=5)
+labels = db.fit_predict(hamming_dist)
+
+# Generate 3D PCA
+pca = PCA(n_components=3)
+X_3d = pca.fit_transform(X)
+
+# Add jitter to positions
+jitter_strength = 0.2
+jitter = np.random.normal(scale=jitter_strength, size=X_3d.shape)
+X_3d_jittered = X_3d + jitter
+
+# Build color dictionary for clusters 
+unique_labels = np.unique(labels)
+color_dict = generate_color_dict(unique_labels)
+
+# Generate interactive 3D scatter plot 
+fig = go.Figure()
+
+for label in unique_labels:
+    mask = labels == label
+    cluster_name = f"Cluster {label}" if label != -1 else "Noise"
+    fig.add_trace(go.Scatter3d(
+        x=X_3d_jittered[mask, 0],
+        y=X_3d_jittered[mask, 1],
+        z=X_3d_jittered[mask, 2],
+        mode='markers',
+        marker=dict(
+            size=6,
+            color=color_dict[label],
+            line=dict(width=0.5, color='black'),
+            opacity=0.8
+        ),
+        name=cluster_name,
+        hovertext=mergedDF['prognosis'].iloc[mask].tolist()
+    ))
+
+# Customize layout of the plot 
+fig.update_layout(
+    title="DBSCAN Clustering on Disease Symptoms<br>(Hamming Distance + 20% Jitter (For visibility), 3D PCA)",
+    scene=dict(
+        xaxis_title='PCA1',
+        yaxis_title='PCA2',
+        zaxis_title='PCA3'
+    ),
+    legend_title="Cluster Label",
+    width=900,
+    height=700,
+)
+
+fig.show()
+#Alternatively, this plot can be saved as an html for exploration.
+##fig.write_html("dbscan_disease_clusters.html", auto_open=False)
+
+```
+![Patient Symptoms Clusters-3D-Improved Colors-Plotly](images/DBSCAN_3d_newColors_plotly.png)
+
 ## 📦 Demo
 
 Video Link:
