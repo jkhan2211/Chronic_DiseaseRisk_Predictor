@@ -93,7 +93,7 @@ The dataset is already divided into training and testing subsets. In total, it c
 
 ## Pre-processing
 It is important to note that while the open-source dataset has already been split into a training and testing components, inspection of the sizes of these dataframes shows that the testing dataset represents only 1% of the training set, which according to data science and model training best practices is inadequate.  To remedy this issue, we opted to recombine the training and testing dataset to create new training/test dataframes using a 80/20% split of patients.
-'''
+```
 # Basic library imports
 import numpy as np
 import pandas as pd
@@ -119,7 +119,7 @@ colSet2 = set(df2.columns.tolist())
 #use set intersection to find which columns are not in both datasets
 diff = colSet1 - colSet2
 print(diff)
-'''
+```
 
 ## Exploratory Data Analysis (EDA)
 
