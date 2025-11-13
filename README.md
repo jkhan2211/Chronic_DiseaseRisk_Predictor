@@ -474,6 +474,79 @@ fig.show()
 ```
 ![Patient Symptoms Clusters-3D-Improved Colors-Plotly](images/DBSCAN_3d_newColors_plotly.png)
 
+Inspection of the symptom clusters makes intuitive sense.  For example, tuberculosis clusters near the common cold, and diseases of the liver (hepatitis, etc.) cluster together as well.  
+
+Let's inspect disease clusters relative to their prognosis using `pd.crosstab` and `seaborn heatmap`:
+
+
+```
+table = pd.crosstab(mergedDF['prognosis'].astype(str), labels )
+
+plt.figure(figsize=(12,12))
+#sns.heatmap(table, annot=True, fmt='d', cmap='YlGnBu')
+
+# Make y-axis labels smaller
+plt.yticks(fontsize=8)  # adjust number as needed
+plt.xticks(fontsize=8)  # optional: shrink x labels too
+
+
+# Plot heatmap
+sns.heatmap(table, annot=True, fmt='d', cmap='YlGnBu')
+plt.title('Prognosis vs Disease Clusters Heatmap')
+plt.xlabel("Disease Clusters")
+plt.yticks(fontsize=8)  # adjust number as needed
+plt.xticks(fontsize=8)  # optional: shrink x labels too
+
+plt.show()
+```
+![Patient Symptoms Clusters by Prognosis-Heatmap](images/diseaseClusterHeatmap.png)
+
+Plot shows that some disease clusters are well-defined, but others are lumped together in clusters 0 and 1.
+
+Question 4- are there individuals (rows) with identical symptom patterns?
+```
+# Find duplicate rows (identical across all columns)
+duplicate_rows = featuresDF[featuresDF.duplicated(keep=False)]
+
+print(f" Number of individuals with shared symptoms: {duplicate_rows.shape[0]}")
+print(f" Percentage of individuals with shared symptoms in dataset: {duplicate_rows.shape[0]/featuresDF.shape[0]}")
+```
+ Number of individuals with shared symptoms: 4961
+ Percentage of individuals with shared symptoms in dataset: 0.9997984683595325
+
+ Virtually every patient has identical symptoms with another individual. What is the extent of this?
+
+ ```
+#Generate a new columm that groups together individuals with identical symptoms:
+
+mergedDF['SymptomGroup'] = pd.factorize([tuple(row) for row in mergedDF.values])[0] + 1  # add 1 to start groups from 1
+
+#how many unique symptom groups are there?
+mergedDF['SymptomGroup'].nunique()
+
+#what is the average number of individuals with identical shared symptoms?
+mergedDF['SymptomGroup'].value_counts().mean()
+
+ ```
+There are only 305 unique symptom combinations in a dataset of nearly 5000 individuals.  Further, the average number of individuals with identical symptoms is: 16.26
+
+These duplicated rows pose a signficant challenge to the analysis of this dataset, and the training of models.
+
+Because of the lack of variation within symptom groups, models will always train and predict prognosis perfectly.
+
+Perfect symptom groups and training is unlikely to occur with real symptoms, so we need an alternative approach to training and testing our classifications models.
+
+There are two strategies we can use:
+1. Randomly 'jitter' the symptoms to artificially create variation for our models to train on.
+2. Go through the dataset and create a 'leave-one-out' approach, where one symptom group per prognosis is removed and used to test the accuracy of the model.
+
+Approach #1 is straightforward and intuitive and has real-world applications.  It is likely that patients may have 1-2 unrelated symptoms to their disease that they are currently seeking treatment for.  (Example: Patient A is suffering from joint aches and chills [indicative of a cold or flu] but also has unrelated anxiety or fatigue).  Random perterbation of our symptom training set will showcase how robust our classification model is to real-world patient scenarios.
+
+Approach #2 is also applicable as it allows us to get a sense of how our model performs combinations of symptoms it has not yet observed.
+
+Both approaches will be used to understand downstream model performance.
+
+
 ## 📦 Demo
 
 Video Link:
