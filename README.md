@@ -6,7 +6,14 @@ It provides a **data-driven decision support tool** for healthcare settings.
 
 ---
 
-## 🎯 Project Overview 
+# Business Objective
+
+The **DiseaseFeatureClassifiers** delivers significant value to all stakeholders in the healthcare ecosystem. By leveraging **AI-driven symptom analysis**, the system **increases diagnostic precision and productivity**, reducing the cognitive and administrative burden on **frontline healthcare professionals**. It **improves patient outcomes** through timely and accurate risk assessment, while offering a **suggestive approach to reduce operational costs** for clinics and hospitals by optimizing workflows and minimizing unnecessary tests or interventions. Additionally, the tool helps **free up critical resources**, including emergency room capacity, enabling healthcare institutions to focus on patients with the most urgent needs, thereby enhancing **overall efficiency and cost-effectiveness**.
+
+
+---
+
+## 🎯 Stakeholders
 
 The stakeholders of DDSAS include:
 
@@ -31,7 +38,7 @@ Rather than presenting a conclusive prognosis, the tool provides probabilistic e
 ## 🧩 Folder Structure
 
 ```
-chronic_disease_risk_predictor
+DiseaseFeatureClassifiers/
 ├── data #Raw Dataset
 │   ├── Disease_Prediction.csv
 ├── src
@@ -50,10 +57,10 @@ The dataset is already divided into training and testing subsets. In total, it c
 ## 🤝 Team Members
 
 [Junaid Khan](https://www.linkedin.com/in/junaid-devops)• 
-[Adam Healey](https://www.linkedin.com/in/adam-healey/) • 
-[Ali Hyder]() • 
-[Olga Nazarenko]() • 
-[Pradeep Venkatesan]()
+[Adam Healey](https://www.linkedin.com/in/adam-healey) • 
+[Ali Hyder](https://www.linkedin.com/in/ali-hyder-iith1041) • 
+[Olga Nazarenko](https://www.linkedin.com/in/olga-nazarenko0) • 
+[Pradeep Venkatesan](https://www.linkedin.com/in/pradeep-venkatesan-tech/)
 
 ---
 
@@ -637,9 +644,25 @@ y_test = removed_rows['prognosis']
 ```
 "Leave-one-out" datasets are ready for model training!
 
+---
+
+## ⚠️ Risks & Uncertainty
+
+**Accuracy of Prognosis:**  
+The reliability of predictions must be evaluated to ensure their correctness.
+
+**Data Quality:**  
+Inaccurate or incomplete data can lead to flawed predictions, impacting overall outcomes.
+
+**Model Bias:**  
+Bias present in the data may skew results, necessitating thorough examination and adjustment.
+
+ 
+---
+
 ## 📦 Demo
 
-Video Link:
+Video Link: Test
 ---
 
 
@@ -647,12 +670,14 @@ Video Link:
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/<username>/Chronic_DiseaseRisk_Predictor.git
-cd Chronic_DiseaseRisk_Predictor
+git clone https://github.com/jkhan2211/DiseaseFeatureClassifiers.git
+cd DiseaseFeatureClassifiers
+```
 
 2. **Clone the repository**
 
 ```bash
 pip install -r requirements.txt
+```
 
 
