@@ -121,13 +121,78 @@ colSet2 = set(df2.columns.tolist())
 diff = colSet1 - colSet2
 print(diff)
 ```
+The training dataset has an extra column called 'Unnamed: 133' that is not in the test set.  This column should be removed before merging
+
+```
+df = df.drop(columns=['Unnamed: 133'])
+
+#re-check to ensure both dataframes have the same columns
+colSet1 = set(df.columns.tolist())
+colSet2 = set(df2.columns.tolist())
+diff = colSet1 - colSet2
+print(diff)
+
+#check reverse as well:
+diff2 = colSet1 - colSet2
+print(diff2)
+```
+Columns match.  Dataframes are ready to be merged.
+```
+#Use pandas concatenate to combine rows of each dataset.
+#also, check first to make sure the columns are in the same order in both datasets.
+
+mergedDF = pd.concat([df, df2[df.columns]], # this ensures the correct ordering by calling df colummns first
+                     ignore_index=True)
+mergedDF.shape
+```
+INSERT ADDITIONAL PREPROCESSING HERE.
 
 ## Exploratory Data Analysis (EDA)
+Now that we have our newly combined dataset, exploratory analysis can begin.
 
+Questions to explore in the dataset:
+1. How clean is the dataset?  Are there missing data or symptoms that are never reported?
 
+2. What is the distribution of symptoms among individuals? 
 
+3. How many symptoms in total are present? How do symptoms cluster with one another?
 
+4. Are there individuals with identical symptom patterns?
+```
+#Question 1- how clean is the dataset?
+#first, the prognosis column should be removed as it is a predictor, not a feature
+featuresDF = mergedDF.drop(columns=['prognosis'])
+# are there NAs?
+na_cols = featuresDF.columns[featuresDF.isna().any()] #get the names of the columns containing NAs
+print("Columns with NaNs:", na_cols.tolist())
 
+#checking for symptoms that are never observed among individuals
+zero_sum_cols = featuresDF.columns[featuresDF.sum() == 0]
+
+print("Columns with sum = 0:", list(zero_sum_cols))
+```
+"Fluid_overload" is never observed as a symptom among patients.  Prior to building a model, this syptom should be removed.
+
+There are no NA values in the dataset.
+
+```
+#Question 2: what is the distribution of symptoms among individuals?
+#This is a binary matrix with no missing values so you can simply count the number of 1s per row and calculate the mean
+avgSymptoms = featuresDF.sum(axis=1).mean()
+avgSymptoms
+```
+The average number of symptoms per patient is: 7.4.  
+Next, use a histogram to inspect the distribution of symptoms among individuals.
+
+```
+plt.figure(figsize=(8,8))
+plt.grid(False)
+plt.hist(featuresDF.sum(axis=1), 
+         bins = 15)
+plt.title("Histogram distribution of Symptoms per individual")
+plt.xlabel("Number of symptoms")
+plt.ylabel("Symptom Counts")
+```
 ## 📦 Demo
 
 Video Link:
