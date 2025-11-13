@@ -91,9 +91,41 @@ The dataset is already divided into training and testing subsets. In total, it c
 | DBSCAN                 | Density-based, finds arbitrarily shaped clusters |      ALH|
 | Agglomerative          | Hierarchical clustering                        | PV |
 
+## Pre-processing
+It is important to note that while the open-source dataset has already been split into a training and testing components, inspection of the sizes of these dataframes shows that the testing dataset represents only 1% of the training set, which according to data science and model training best practices is inadequate.  To remedy this issue, we opted to recombine the training and testing dataset to create new training/test dataframes using a 80/20% split of patients.
+'''
+# Basic library imports
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 1. Load the training data
+df = pd.read_csv("/Users/adamhealey/Downloads/Training.csv")
+print("Dataset shape:", df.shape)
+df.head()
+
+# 2. Load the testing data
+df2 = pd.read_csv("/Users/adamhealey/Downloads/Testing.csv")
+print("Dataset shape:", df2.shape)
+df2.head()
+
+#look at column names and look to see which is different between the test and training set
+
+#save the column names of each dataframe to a set
+colSet1 = set(df.columns.tolist())
+colSet2 = set(df2.columns.tolist())
+
+#use set intersection to find which columns are not in both datasets
+diff = colSet1 - colSet2
+print(diff)
+'''
+
 ## Exploratory Data Analysis (EDA)
 
-It is important to note that while the open-source dataset has already been split into a training and testing components, inspection of the sizes of these dataframes shows that the testing dataset represents only 1% of the training set, which according to data science and model training best practices is inadequate.  To remedy this issue, we opted to recombine the training and testing dataset, and use <pre> sklearn train_test_split </pre> to create a new test dataset from 20% of patients.
+
+
+
 
 ## 📦 Demo
 
