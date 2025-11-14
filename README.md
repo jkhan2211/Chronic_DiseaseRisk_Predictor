@@ -108,12 +108,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # 1. Load the training data
-df = pd.read_csv("/Users/adamhealey/Downloads/Training.csv")
+df = pd.read_csv("/data/Training.csv")
 print("Dataset shape:", df.shape)
 df.head()
 
 # 2. Load the testing data
-df2 = pd.read_csv("/Users/adamhealey/Downloads/Testing.csv")
+df2 = pd.read_csv("/data/Testing.csv")
 print("Dataset shape:", df2.shape)
 df2.head()
 ```
