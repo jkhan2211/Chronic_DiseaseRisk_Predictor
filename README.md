@@ -667,7 +667,7 @@ Video Link: Test
 
 
 ## ⚙️ Setup & Usage
-0. **Pre-requistes**
+1. **Pre-requistes**
 To run the app, you must have docker installed in to your pc. Please follow the instructions below to download and install docker desktop
 
 Windows:
@@ -687,31 +687,31 @@ Linux:
 sudo apt install docker.io docker-compose-plugin
 ```
 
-1. **Clone the repository**
+2. **Clone the repository**
 ```bash
 git clone https://github.com/jkhan2211/DiseaseFeatureClassifiers.git
 cd DiseaseFeatureClassifiers
 ```
 
-2. **Start up the containers**
+3. **Start up the containers**
 
 ```
 docker compose up -d
 ```
 
-3. **Go to a web browser**
+4. **Go to a web browser**
 
 Type the following:
 ```
     http://localhost:8501/
 ```
 
-4. **To Stop the App from running**
+5. **To Stop the App from running**
 ```
 docker compose stop
 ```
 
-5. **Kill the container**
+6. **Kill the container**
 ```
 docker compose down
 ```
