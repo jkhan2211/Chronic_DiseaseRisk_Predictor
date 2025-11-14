@@ -73,8 +73,9 @@ The dataset is already divided into training and testing subsets. In total, it c
 |Exploratory Data Analysis | DBScan, PCA    | Dimensionality reduction and clustering | 
 | Machine Learning    | scikit-learn, xgboost | Train predictive models   |
 | Experiment Tracking | MLflow          | Log experiments & model metrics|
-| UI / Demo           | Streamlit       | Local interactive interface   |
-
+| Packaging/Containerization | Docker          | Package app + dependencies into reproducible images for deployment|
+| Model Servings/API | FastAPI          | Serve the ML model via REST API endpoints for real-time predictions|
+| UI / Demo           | Streamlit       | Provide a user-friendly web UI for interacting with the model  |
 ---
 
 ## Sample Classification Models to Try
@@ -667,17 +668,52 @@ Video Link: Test
 
 
 ## ⚙️ Setup & Usage
+1. **Pre-requistes**
+To run the app, you must have docker installed in to your pc. Please follow the instructions below to download and install docker desktop
 
-1. **Clone the repository**
+Windows:
+- Docker Desktop
+
+- Enable WSL2 Backend
+
+- Start Docker Desktop before running the project
+
+Mac:
+- Install Docker Desktop for Mac
+
+That’s it — it will include Docker Compose
+
+Linux:
+```
+sudo apt install docker.io docker-compose-plugin
+```
+
+2. **Clone the repository**
 ```bash
 git clone https://github.com/jkhan2211/DiseaseFeatureClassifiers.git
 cd DiseaseFeatureClassifiers
 ```
 
-2. **Clone the repository**
+3. **Start up the containers**
 
-```bash
-pip install -r requirements.txt
+```
+docker compose up -d
 ```
 
+4. **Go to a web browser**
+
+Type the following:
+```
+    http://localhost:8501/
+```
+
+5. **To Stop the App from running**
+```
+docker compose stop
+```
+
+6. **Kill the container**
+```
+docker compose down
+```
 

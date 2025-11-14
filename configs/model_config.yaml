@@ -1,0 +1,13 @@
+model:
+  name: DiseaseRandomForest_v1_final
+  target_variable: prognosis
+  best_model: RandomForestClassifier
+
+  parameters:
+    n_estimators: 500
+    random_state: 42
+    n_jobs: -1     # speeds training (does NOT change accuracy)
+
+augmentation:
+  enabled: true
+  flip_percent: 0.10   # EXACT notebook value
