@@ -483,6 +483,8 @@ fig.show()
 
 Inspection of the symptom clusters makes intuitive sense.  For example, tuberculosis clusters near the common cold, and diseases of the liver (hepatitis, etc.) cluster together as well.  
 
+![Patient Symptoms Clusters](images/diseaseClusterRotation.gif)
+
 Let's inspect disease clusters relative to their prognosis using `pd.crosstab` and `seaborn heatmap`:
 
 
