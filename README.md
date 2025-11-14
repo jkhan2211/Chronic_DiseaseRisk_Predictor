@@ -674,10 +674,26 @@ git clone https://github.com/jkhan2211/DiseaseFeatureClassifiers.git
 cd DiseaseFeatureClassifiers
 ```
 
-2. **Clone the repository**
+2. **Start up the containers**
 
-```bash
-pip install -r requirements.txt
+```
+docker compose up -d
 ```
 
+3. **Go to a web browser**
+
+Type the following:
+```
+    http://localhost:8501/
+```
+
+4. **To Stop the App from running**
+```
+docker compose stop
+```
+
+5. **Kill the container**
+```
+docker compose down
+```
 
