@@ -698,8 +698,28 @@ cd DiseaseFeatureClassifiers
 
 3. **Start up the containers**
 
+General:
 ```
 docker compose up -d
+```
+Mac (alternative setup):
+```
+# Make sure you have the latest code
+git pull origin main
+
+# Stop and remove any running containers
+docker compose down
+
+# Clean up unused build cache and images
+docker builder prune -a
+
+# Manually pull images with amd64 platform (needed on M1/M2 Macs)
+docker pull --platform linux/amd64 jkhandockerlab420/fastapi:v1
+docker pull --platform linux/amd64 jkhandockerlab420/streamlit:v1
+
+# Start the app using the Mac-specific compose file
+docker-compose -f docker-compose.mac.yaml up
+
 ```
 
 4. **Go to a web browser**
