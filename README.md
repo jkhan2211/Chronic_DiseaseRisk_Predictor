@@ -158,7 +158,7 @@ mergedDF.shape
 Now that we have our newly combined dataset, exploratory analysis can begin.
 
 Questions to explore in the dataset:
-1. How clean is the dataset?  Are there missing data or symptoms that are never reported?
+1. How clean is the dataset?  Are there any missing values or symptoms that are never reported?
 
 2. What is the distribution of symptoms among individuals? 
 
@@ -169,7 +169,7 @@ Questions to explore in the dataset:
 #Question 1- how clean is the dataset?
 #first, the prognosis column should be removed as it is a predictor, not a feature
 featuresDF = mergedDF.drop(columns=['prognosis'])
-# are there NAs?
+# are there NAs (missing or invalid data)?
 na_cols = featuresDF.columns[featuresDF.isna().any()] #get the names of the columns containing NAs
 print("Columns with NaNs:", na_cols.tolist())
 
