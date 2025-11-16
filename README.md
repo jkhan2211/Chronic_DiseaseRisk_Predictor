@@ -789,13 +789,14 @@ http://localhost:8501/
 ```
 
 5. **To Stop the App from running**
-Windows/Linux:
+
+**Windows/Linux:**
 ```
 # Then run following command
 docker compose stop
 ```
 
-Mac:
+**Mac:**
 ```
 # To stop the app from running press ctrl-c
 # Then run following command
