@@ -153,7 +153,6 @@ mergedDF = pd.concat([df, df2[df.columns]], # this ensures the correct ordering 
                      ignore_index=True)
 mergedDF.shape
 ```
-INSERT ADDITIONAL PREPROCESSING HERE.
 
 ## Exploratory Data Analysis (EDA)
 Now that we have our newly combined dataset, exploratory analysis can begin.
@@ -557,7 +556,19 @@ Approach #2 is also applicable as it allows us to get a sense of how our model p
 Both approaches will be used to understand downstream model performance.
 
 ## Model Selection and Performance
-INSERT Models and metrics
+
+Results of the models testing:
+
+ The KMeans model initially failed to form clear clusters on the raw dataset, appearing condensed around a single point with group‑specific outliers.
+
+ On the artificially varied dataset (with random flips of symptom values), clusters still formed but showed dominance by repeated prognoses (e.g., Cervical spondylosis appearing many times), reflecting the frequency bias of duplicated/noisy rows. The silhouette score was moderately strong (~0.55), suggesting clusters were somewhat distinct but not sharply separated; however, the injected noise blurred boundaries and reduced medical relevance.
+ 
+ After removing duplicates (305 unique rows) and applying PCA, the silhouette score improved to ~0.39, indicating reasonably well‑separated clusters. Hypothyroidism and Common Cold consistently appeared as outliers due to distinct symptom patterns. These outliers clustered near medically related diseases — for example, Common Cold grouped near Tuberculosis and Pneumonia, while Hypothyroidism grouped near Hyperthyroidism.
+ 
+ Under a leave‑one‑out cleaning approach, the silhouette score stayed stable ~0.38, showing similar numerical behavior to the unique dataset, but the medical relevance degraded: the same outliers shifted toward unrelated conditions (e.g., Common Cold near Impetigo or Psoriasis), demonstrating that removing data disrupted the cluster structure even though the overall separation metric remained comparable.
+ 
+ Separately, a Bernoulli classifier appeared to achieve 100% accuracy, but this was due to issues in this dataset rather than genuine predictive power. The outcome underscores how supervised methods may exploit dataset artifacts that unsupervised clustering does not.
+
 
 ## Model Robustness
 To evaluate how robust one of our top performing models (Random Forest) is to training data perturbation (Approach #1- Real world unrelated symptoms to prognosis), we randomly changed symptoms in our training set and evaluated their impact on disease prediction accuracy.  The percentage of random symptoms altered across the dataset ranged from 1% to 40% `[0.01, 0.02, 0.05, 0.075, 0.1, 0.125, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4]`
@@ -698,8 +709,28 @@ cd DiseaseFeatureClassifiers
 
 3. **Start up the containers**
 
+General:
 ```
 docker compose up -d
+```
+Mac (alternative setup):
+```
+# Make sure you have the latest code
+git pull origin main
+
+# Stop and remove any running containers
+docker compose down
+
+# Clean up unused build cache and images
+docker builder prune -a
+
+# Manually pull images with amd64 platform (needed on M1/M2 Macs)
+docker pull --platform linux/amd64 jkhandockerlab420/fastapi:v1
+docker pull --platform linux/amd64 jkhandockerlab420/streamlit:v1
+
+# Start the app using the Mac-specific compose file
+docker-compose -f docker-compose.mac.yaml up
+
 ```
 
 4. **Go to a web browser**
