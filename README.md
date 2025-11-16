@@ -153,7 +153,20 @@ mergedDF = pd.concat([df, df2[df.columns]], # this ensures the correct ordering 
                      ignore_index=True)
 mergedDF.shape
 ```
-INSERT ADDITIONAL PREPROCESSING HERE.
+
+```
+#Model Evaluation
+# 3.Results of the model testing
+The KMeans model initially failed to form clear clusters on the raw dataset, appearing condensed around a single point with group‑specific outliers.
+
+On the artificially varied dataset (with random flips of symptom values), clusters still formed but showed dominance by repeated prognoses (e.g., Cervical spondylosis appearing many times), reflecting the frequency bias of duplicated/noisy rows. The silhouette score was moderately strong (~0.55), suggesting clusters were somewhat distinct but not sharply separated; however, the injected noise blurred boundaries and reduced medical relevance.
+
+After removing duplicates (305 unique rows) and applying PCA, the silhouette score improved to ~0.39, indicating reasonably well‑separated clusters. Hypothyroidism and Common Cold consistently appeared as outliers due to distinct symptom patterns. These outliers clustered near medically related diseases — for example, Common Cold grouped near Tuberculosis and Pneumonia, while Hypothyroidism grouped near Hyperthyroidism.
+
+Under a leave‑one‑out cleaning approach, the silhouette score stayed stable ~0.38, showing similar numerical behavior to the unique dataset, but the medical relevance degraded: the same outliers shifted toward unrelated conditions (e.g., Common Cold near Impetigo or Psoriasis), demonstrating that removing data disrupted the cluster structure even though the overall separation metric remained comparable.
+
+Separately, a Bernoulli classifier achieved 100% accuracy across all tested datasets, highlighting that supervised classification captured label patterns perfectly even when unsupervised clustering struggled.
+```
 
 ## Exploratory Data Analysis (EDA)
 Now that we have our newly combined dataset, exploratory analysis can begin.
