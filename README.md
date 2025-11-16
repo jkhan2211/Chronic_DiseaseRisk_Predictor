@@ -39,12 +39,55 @@ Rather than presenting a conclusive prognosis, the tool provides probabilistic e
 
 ```
 DiseaseFeatureClassifiers/
-├── data #Raw Dataset
-│   ├── Disease_Prediction.csv
-├── src
-│   ├── streamlit_app.py # Interactive demo UI
-├── requirements.txt
-└── README.md # Project overview
+├── Dockerfile # Dockerfile to containerize backend
+├── README.md
+├── docker-compose.linux.yaml
+├── docker-compose.mac.yaml
+│
+├── configs/ #MLFlow Config files
+│   └── ...configuration files...
+│
+├── data/
+│   ├── Testing.csv
+│   ├── Training.csv
+│   ├── improved_disease_dataset.csv
+│   ├── cleaned_dataset/
+│   └── raw_data/
+│
+├── images/
+│   └── ...project images, plots, diagrams...
+│
+├── Preprocessing_EDA/
+│   └── ...Contains our decided models notebooks, training and evaluations...
+│
+├── src/
+│   ├── api/ # This directory contains the backend service that exposes the machine learning model through a REST API.
+│   │   ├── inference.py
+│   │   ├── main.py
+│   │   ├── requirements.txt
+│   │   └── schemas.py
+│   │
+│   ├── features/
+│   │   └── ...feature engineering code...
+│   │
+│   │
+│   ├── models_operations/
+│   │   └── ...script for training models, and hosting to MLFLow...
+│   │
+│   ├── Experiments_JunaidKhan/
+│   │   └── ...experimental notebooks/code...
+│   │
+│   ├── Experiments_NO/
+│   │   └── ...experimental notebooks/code...
+│   │
+│   └── R&D/
+│       └── ...experimental notebooks/code...
+│
+├── streamlit_app/ #This directory contains the Streamlit-based frontend application that users interact with
+│   ├── Dockerfile
+│   ├── main.py
+│   └── requirements.txt
+
 ```
 ---
 ## Dataset
@@ -158,7 +201,7 @@ mergedDF.shape
 Now that we have our newly combined dataset, exploratory analysis can begin.
 
 Questions to explore in the dataset:
-1. How clean is the dataset?  Are there missing data or symptoms that are never reported?
+1. How clean is the dataset?  Are there any missing values or symptoms that are never reported?
 
 2. What is the distribution of symptoms among individuals? 
 
@@ -169,7 +212,7 @@ Questions to explore in the dataset:
 #Question 1- how clean is the dataset?
 #first, the prognosis column should be removed as it is a predictor, not a feature
 featuresDF = mergedDF.drop(columns=['prognosis'])
-# are there NAs?
+# are there NAs (missing or invalid data)?
 na_cols = featuresDF.columns[featuresDF.isna().any()] #get the names of the columns containing NAs
 print("Columns with NaNs:", na_cols.tolist())
 
@@ -676,7 +719,10 @@ Bias present in the data may skew results, necessitating thorough examination an
 
 ## 📦 Demo
 
-Video Link: Test
+#### Video Demo of App:
+
+#### Team Reflections:
+
 ---
 
 
@@ -709,11 +755,12 @@ cd DiseaseFeatureClassifiers
 
 3. **Start up the containers**
 
-General:
+**Windows/Linux:**
 ```
-docker compose up -d
+docker-compose -f docker-compose.linux.yaml up -d
 ```
-Mac (alternative setup):
+
+**Mac:**
 ```
 # Make sure you have the latest code
 git pull origin main
@@ -737,11 +784,21 @@ docker-compose -f docker-compose.mac.yaml up
 
 Type the following:
 ```
-    http://localhost:8501/
+http://localhost:8501/
 ```
 
 5. **To Stop the App from running**
+
+**Windows/Linux:**
 ```
+# Then run following command
+docker compose stop
+```
+
+**Mac:**
+```
+# To stop the app from running press ctrl-c
+# Then run following command
 docker compose stop
 ```
 
