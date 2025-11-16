@@ -110,6 +110,7 @@ The dataset is already divided into training and testing subsets. In total, it c
 ## Video Reflections
 [Adam Healey](https://drive.google.com/file/d/1W6yHmcD_tL3kjgfHdAr_pbDP1bnJ-V6x/view?usp=sharing)
 
+[Olga Nazarenko](https://drive.google.com/file/d/1Pk4KMUACED6K0vKo4EZW34H30vBDv9kh/view?usp=share_link)
 
 ## 📦 Technologies Used
 
