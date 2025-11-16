@@ -1,21 +1,13 @@
 services:
   fastapi:
-    platform: linux/arm64
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: fastapi
     image: jkhandockerlab420/fastapi:v1
+    container_name: fastapi
     ports:
       - "8000:8000"
 
   streamlit:
-    platform: linux/arm64
-    build:
-      context: ./streamlit_app
-      dockerfile: Dockerfile
-    container_name: streamlit
     image: jkhandockerlab420/streamlit:v1
+    container_name: streamlit
     ports:
       - "8501:8501"
     environment:
