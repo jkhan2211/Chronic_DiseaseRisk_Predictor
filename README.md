@@ -112,6 +112,8 @@ The dataset is already divided into training and testing subsets. In total, it c
 
 [Olga Nazarenko](https://drive.google.com/file/d/1Pk4KMUACED6K0vKo4EZW34H30vBDv9kh/view?usp=share_link)
 
+[Junaid Khan](https://www.youtube.com/watch?v=e25jkIO0gww)
+
 ## 📦 Technologies Used
 
 | Component           | Technology       | Purpose                        |
@@ -724,9 +726,10 @@ Bias present in the data may skew results, necessitating thorough examination an
 
 ## 📦 Demo
 
-#### Video Demo of App:
+![System Design](images/arch.png)
 
-#### Team Reflections:
+
+![App Screenshot](images/demo.png)
 
 ---
 
@@ -803,8 +806,6 @@ docker compose stop
 **Mac:**
 ```
 # To stop the app from running press ctrl-c
-# Then run following command
-docker compose stop
 ```
 
 6. **Kill the container**
