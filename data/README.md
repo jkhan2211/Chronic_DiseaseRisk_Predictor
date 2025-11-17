@@ -5,6 +5,8 @@ It includes raw data, cleaned datasets, engineering-ready files, and the final C
 
 This directory keeps the project’s data pipeline organized and ensures full transparency from *** raw → cleaned → processed → training-ready.***
 
+![S3](images/mlflow_s3.png)
+
 # Data Storage Strategy & Version Control
 
 Although the most recent CSV datasets are stored directly in GitHub for convenience and transparency, we also maintain a separate data versioning approach using AWS S3.
