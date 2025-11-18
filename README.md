@@ -116,6 +116,8 @@ The dataset is already divided into training and testing subsets. In total, it c
 
 [Ali Hyder](https://docs.google.com/videos/d/1g1mj93WHbI0OYdPDoVYwZHBfTX2-1w3TpATA-SmQHRk/edit?usp=drive_link)
 
+[Pradeep Venkatesan](https://drive.google.com/file/d/1kkAx85taoY_ySk-cy0A53ViWVl1FJiM2/view?usp=drive_link)
+
 ## 📦 Technologies Used
 
 | Component           | Technology       | Purpose                        |
